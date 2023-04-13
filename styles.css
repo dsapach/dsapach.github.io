@@ -1,3 +1,19 @@
 body {
-  background-color: #ffffcc;
+  background-color: black;
+}
+h1 {
+	font-family: inter; font-size: 82pt;
+}
+img {
+	width: 350px;
+}
+.center {text-align: center; padding: 0 50px 0 50px;}
+
+div {
+    position: absolute;
+    top:150px;
+    bottom: 0;
+    left: 150px;
+    right: 0;
+        margin: auto;
 }
