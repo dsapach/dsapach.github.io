@@ -25,8 +25,15 @@
         src: "huracan.riv",
         canvas: document.getElementById("canvas"),
         autoplay: true,
-        animations: 'LIGHT ON'
-        onLoad: () => {
+        stateMachines: 'State Machine 1'
+        fit: rive.Fit.cover,
+        onLoad: (_) => {
+            const inputs = r.stateMachines('State Machine 1')
+            const trigger = inputs.find(i => i,name === 'LIGHTS ON?')
+            btn.onclick = (e) => {
+                e.preventDefault();
+
+            }
           r.resizeDrawingSurfaceToCanvas();
         },
         });
