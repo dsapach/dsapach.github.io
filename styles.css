@@ -8,3 +8,26 @@ div {
 	align-items: center;
 	height: 100vh;
 }
+
+canvas {
+margin-top: -5em;
+margin-bottom: -3em;
+pointer-events: none;
+}
+
+.content{
+text-align: center;
+}
+
+a {
+        background: white;
+        padding: 1em;
+        text-decoration: none;
+        font-family: 'Nunito';
+        color: black;
+        font-weight: bold;
+        border-radius: .3em;
+        width: 30%;
+        display: inline-block;
+        transition: background-color .3s;
+    }

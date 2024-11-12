@@ -1,0 +1,35 @@
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <title>HURACAN</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+        <body>
+
+            <div class="container">
+                <canvas id="canvas" width="512" height="512"> </canvas>
+                <div class="content">
+                    <a href="#"> LIGHTS </a>
+                </div>
+            </div>
+
+            <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
+                
+                <script>
+        const r = new rive.Rive({
+        src: "huracan.riv",
+        // OR the path to a discoverable and public Rive asset
+        // src: '/public/example.riv',
+        canvas: document.getElementById("canvas"),
+        autoplay: true,
+        // artboard: "Arboard", // Optional. If not supplied the default is selected
+        stateMachines: "bumpy",
+        onLoad: () => {
+          r.resizeDrawingSurfaceToCanvas();
+        },
+        });
+
+                </script>
+        </body>
+    </html>
