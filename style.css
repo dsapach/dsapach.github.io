@@ -534,40 +534,30 @@ ul { list-style: none; }
   width: 340px;
   height: 340px;
 }
-.photo-placeholder {
+/* ── REAL PHOTO ─────────────────────────────────────────── */
+.photo-img {
   width: 100%; height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
   position: relative;
-  overflow: hidden;
-}
-/* Real photo: replace .photo-placeholder content with <img> */
-.photo-placeholder svg { opacity: .8; }
-.photo-label {
-  font-size: .75rem;
-  color: rgba(255,255,255,.4);
-  text-align: center;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  z-index: 1;
 }
 .photo-ring {
   position: absolute;
-  inset: -8px;
+  inset: -10px;
   border-radius: 50%;
-  border: 2px solid var(--accent);
-  opacity: .4;
+  border: 1.5px solid var(--accent);
+  opacity: 1;
+  pointer-events: none;
 }
 .photo-ring::before {
   content: '';
   position: absolute;
-  inset: 8px;
+  inset: -8px;
   border-radius: 50%;
-  border: 1px solid rgba(77,159,255,.15);
+  border: 1px solid rgba(77,159,255,.18);
 }
 .photo-badge {
   position: absolute;
