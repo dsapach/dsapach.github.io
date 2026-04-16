@@ -287,7 +287,7 @@ function initShowreel() {
     const VIDEO_ID = 'YOUR_VIDEO_ID';
     const iframe   = document.createElement('iframe');
     iframe.src     = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0`;
-    iframe.title   = 'Denis Sapach — Showreel 2024';
+    iframe.title   = 'Denis Sapach — Showreel 2026';
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
     iframe.setAttribute('allowfullscreen', '');
@@ -513,42 +513,73 @@ function initSmoothScroll() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   9. CURSOR GLOW EFFECT (DESKTOP)
+   9. CUSTOM CURSOR (DESKTOP)
 ══════════════════════════════════════════════════════════ */
 function initCursorGlow() {
-  if (window.matchMedia('(hover: none)').matches) return; // skip touch
+  // Skip on touch devices
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-  const glow = document.createElement('div');
-  glow.style.cssText = `
-    position: fixed; pointer-events: none; z-index: 9999;
-    width: 400px; height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(77,159,255,.06) 0%, transparent 70%);
-    transform: translate(-50%, -50%);
-    transition: opacity .4s ease;
-    opacity: 0;
-  `;
-  document.body.appendChild(glow);
+  const ring = document.getElementById('cursor-ring');
+  const dot  = document.getElementById('cursor-dot');
+  if (!ring || !dot) return;
 
   let mouseX = 0, mouseY = 0;
-  let glowX = 0, glowY = 0;
-  let rafId;
+  let ringX  = 0, ringY  = 0;
+  let visible = false;
+
+  // Smooth ring follows mouse with lag; dot snaps instantly
+  function animate() {
+    ringX += (mouseX - ringX) * 0.13;
+    ringY += (mouseY - ringY) * 0.13;
+
+    ring.style.left = ringX + 'px';
+    ring.style.top  = ringY + 'px';
+    dot.style.left  = mouseX + 'px';
+    dot.style.top   = mouseY + 'px';
+
+    requestAnimationFrame(animate);
+  }
+  animate();
 
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    glow.style.opacity = '1';
-  });
-  document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
 
-  function animate() {
-    glowX += (mouseX - glowX) * 0.12;
-    glowY += (mouseY - glowY) * 0.12;
-    glow.style.left = glowX + 'px';
-    glow.style.top  = glowY + 'px';
-    rafId = requestAnimationFrame(animate);
-  }
-  animate();
+    if (!visible) {
+      ring.style.opacity = '1';
+      dot.style.opacity  = '1';
+      visible = true;
+    }
+  });
+
+  document.addEventListener('mouseleave', () => {
+    ring.style.opacity = '0';
+    dot.style.opacity  = '0';
+    visible = false;
+  });
+
+  // Hover state — links, buttons, cards
+  const hoverTargets = 'a, button, .skill-card, .project-card, .lottie-box, .filter-btn, .nav-link, .cta-btn';
+  document.querySelectorAll(hoverTargets).forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  // Dynamic hover for JS-created elements
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest('a, button, .skill-card, .project-card, .lottie-box, .filter-btn')) {
+      document.body.classList.add('cursor-hover');
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('a, button, .skill-card, .project-card, .lottie-box, .filter-btn')) {
+      document.body.classList.remove('cursor-hover');
+    }
+  });
+
+  // Click state
+  document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
+  document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
 }
 
 /* ══════════════════════════════════════════════════════════
