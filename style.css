@@ -568,6 +568,7 @@ ul { list-style: none; }
   font-weight: 600;
   padding: .45rem .9rem;
   border-radius: 50px;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: .4rem;
