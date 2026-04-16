@@ -514,72 +514,11 @@ function initSmoothScroll() {
 
 /* ══════════════════════════════════════════════════════════
    9. CUSTOM CURSOR (DESKTOP)
+   Blue arrow via CSS SVG data URI — no JS needed
 ══════════════════════════════════════════════════════════ */
 function initCursorGlow() {
-  // Skip on touch devices
-  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-  const ring = document.getElementById('cursor-ring');
-  const dot  = document.getElementById('cursor-dot');
-  if (!ring || !dot) return;
-
-  let mouseX = 0, mouseY = 0;
-  let ringX  = 0, ringY  = 0;
-  let visible = false;
-
-  // Smooth ring follows mouse with lag; dot snaps instantly
-  function animate() {
-    ringX += (mouseX - ringX) * 0.13;
-    ringY += (mouseY - ringY) * 0.13;
-
-    ring.style.left = ringX + 'px';
-    ring.style.top  = ringY + 'px';
-    dot.style.left  = mouseX + 'px';
-    dot.style.top   = mouseY + 'px';
-
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    if (!visible) {
-      ring.style.opacity = '1';
-      dot.style.opacity  = '1';
-      visible = true;
-    }
-  });
-
-  document.addEventListener('mouseleave', () => {
-    ring.style.opacity = '0';
-    dot.style.opacity  = '0';
-    visible = false;
-  });
-
-  // Hover state — links, buttons, cards
-  const hoverTargets = 'a, button, .skill-card, .project-card, .lottie-box, .filter-btn, .nav-link, .cta-btn';
-  document.querySelectorAll(hoverTargets).forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-
-  // Dynamic hover for JS-created elements
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest('a, button, .skill-card, .project-card, .lottie-box, .filter-btn')) {
-      document.body.classList.add('cursor-hover');
-    }
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest('a, button, .skill-card, .project-card, .lottie-box, .filter-btn')) {
-      document.body.classList.remove('cursor-hover');
-    }
-  });
-
-  // Click state
-  document.addEventListener('mousedown', () => document.body.classList.add('cursor-click'));
-  document.addEventListener('mouseup',   () => document.body.classList.remove('cursor-click'));
+  // Cursor is handled entirely via CSS SVG data URI.
+  // Nothing to do here — keeping function for compatibility.
 }
 
 /* ══════════════════════════════════════════════════════════
