@@ -4,13 +4,13 @@
 
 /* ── CUSTOM CURSOR ──────────────────────────────────────── */
 
-/* Custom sharp game-style cursor — desktop only */
+/* Chevron cursor — no tail, rounded corners, filled blue — desktop only */
 @media (hover: hover) and (pointer: fine) {
   * {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cfilter id='g'%3E%3CfeGaussianBlur stdDeviation='1' result='blur'/%3E%3CfeComposite in='SourceGraphic' in2='blur' operator='over'/%3E%3C/filter%3E%3Cpath d='M5 2 L5 22 L10 16 L14 24 L16.5 22.8 L12.5 14.8 L20 14.8 Z' fill='none' stroke='%234D9FFF' stroke-width='1.5' stroke-linejoin='round' stroke-linecap='round' filter='url(%23g)'/%3E%3Cpath d='M5 2 L5 22 L10 16 L14 24 L16.5 22.8 L12.5 14.8 L20 14.8 Z' fill='rgba(77%2C159%2C255%2C0.15)' stroke='none'/%3E%3Ccircle cx='5' cy='2' r='1.2' fill='%234D9FFF'/%3E%3C/svg%3E") 5 2, auto !important;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 4 Q4 3 5 3.5 L28 15 Q29.5 15.8 28 16.6 L18 21.5 L18 21.5 L13 28.5 Q12 30 11 28.5 L11 28 L4 5 Q3.5 3.5 4 4 Z' fill='%234D9FFF' stroke='%23ffffff' stroke-width='1.2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 4 3, auto !important;
   }
   a, button, .skill-card, .project-card, .lottie-box, .filter-btn, .nav-link, .cta-btn, [role="button"] {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 2 L5 22 L10 16 L14 24 L16.5 22.8 L12.5 14.8 L20 14.8 Z' fill='rgba(77%2C159%2C255%2C0.25)' stroke='%234D9FFF' stroke-width='1.5' stroke-linejoin='round' stroke-linecap='round'/%3E%3Ccircle cx='5' cy='2' r='1.8' fill='%234D9FFF'/%3E%3Ccircle cx='5' cy='2' r='3' fill='none' stroke='%234D9FFF' stroke-width='0.8' opacity='0.5'/%3E%3C/svg%3E") 5 2, pointer !important;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M4 4 Q4 3 5 3.5 L28 15 Q29.5 15.8 28 16.6 L18 21.5 L18 21.5 L13 28.5 Q12 30 11 28.5 L11 28 L4 5 Q3.5 3.5 4 4 Z' fill='%23ffffff' stroke='%234D9FFF' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 4 3, pointer !important;
   }
 }
 
