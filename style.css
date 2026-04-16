@@ -1309,7 +1309,7 @@ ul { list-style: none; }
 }
 
 @media (max-width: 768px) {
-  .nav-links, .nav-cta {
+  .nav-links {
     display: none;
     flex-direction: column;
     position: fixed;
@@ -1321,13 +1321,18 @@ ul { list-style: none; }
     gap: 1.5rem;
     border-top: 1px solid rgba(255,255,255,.06);
   }
-  .nav-links { display: none; }
+  .nav-cta { display: none; }
   #navbar.menu-open .nav-links {
     display: flex;
   }
   #navbar.menu-open .nav-cta {
     display: inline-flex;
     margin: 0 auto;
+    width: auto;
+    max-width: 140px;
+    padding: .45rem 1.4rem;
+    font-size: .82rem;
+    align-self: center;
   }
   .hamburger { display: flex; }
   .nav-link { font-size: 1.1rem; color: rgba(255,255,255,.8); }
