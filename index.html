@@ -856,9 +856,7 @@ ul { list-style: none; }
   transition: transform .35s cubic-bezier(.25,.8,.25,1), box-shadow .35s ease, opacity .4s ease;
 }
 .project-card.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(.92);
+  display: none;
 }
 .project-card--tall { grid-row: span 2; }
 .project-card--wide { grid-column: span 2; }
@@ -1586,7 +1584,7 @@ ul { list-style: none; }
           <div class="skills-tags">
             <span class="tag">Motion Design</span>
             <span class="tag">UI Design</span>
-            <span class="tag">Lottie / Rive</span>
+            <span class="tag">Lottie</span>
             <span class="tag">Brand Identity</span>
             <span class="tag">After Effects</span>
             <span class="tag">Figma</span>
@@ -1653,7 +1651,7 @@ ul { list-style: none; }
               <path d="M15 20 l4 4 6-8" stroke="#00DDB3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <h3 class="skill-name">Lottie / Rive</h3>
+          <h3 class="skill-name">Lottie</h3>
           <p class="skill-desc">Lightweight JSON animations for web & apps</p>
           <div class="skill-level" aria-label="Proficiency 90%">
             <div class="skill-bar" style="--pct:90%"></div>
@@ -2399,21 +2397,30 @@ function initPortfolioFilter() {
 
       const filter = btn.dataset.filter;
 
-      cards.forEach((card, i) => {
+      // Сначала мгновенно скрываем ненужные карточки через display:none,
+      // чтобы grid сразу перестроился и нужные карточки встали на место
+      cards.forEach(card => {
         const category = card.dataset.category;
         const show = filter === 'all' || category === filter;
+        if (!show) {
+          gsap.killTweensOf(card);
+          gsap.set(card, { opacity: 0, scale: 0.92 });
+          card.classList.add('hidden');
+        }
+      });
 
+      // Затем анимируем появление видимых карточек
+      let visibleIndex = 0;
+      cards.forEach(card => {
+        const category = card.dataset.category;
+        const show = filter === 'all' || category === filter;
         if (show) {
           card.classList.remove('hidden');
           gsap.fromTo(card,
-            { opacity: 0, scale: .9, y: 20 },
-            { opacity: 1, scale: 1, y: 0, duration: .45, delay: i * 0.05, ease: 'power2.out' }
+            { opacity: 0, scale: 0.9, y: 24 },
+            { opacity: 1, scale: 1, y: 0, duration: .45, delay: visibleIndex * 0.07, ease: 'power2.out' }
           );
-        } else {
-          gsap.to(card, {
-            opacity: 0, scale: .92, y: 12, duration: .3, ease: 'power2.in',
-            onComplete: () => card.classList.add('hidden')
-          });
+          visibleIndex++;
         }
       });
     });
