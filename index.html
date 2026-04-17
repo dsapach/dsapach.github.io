@@ -45,20 +45,27 @@
   align-items: center;
   gap: 1.4rem;
 }
-.pl-logo-svg {
-  width: 100px;
-  height: 68px;
-  overflow: visible;
-}
-.pl-d, .pl-s {
+.pl-logo {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
   opacity: 0;
 }
-.pl-dot {
-  width: 6px; height: 6px;
+.pl-logo-text {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+.pl-logo-dot {
+  width: 10px; height: 10px;
   border-radius: 50%;
   background: #4D9FFF;
-  box-shadow: 0 0 10px #4D9FFF, 0 0 20px #4D9FFF88;
-  opacity: 0;
+  box-shadow: 0 0 0 3px rgba(77,159,255,.27);
+  flex-shrink: 0;
+  animation: pulse-dot 2.5s ease infinite;
 }
 .pl-bar {
   width: 120px;
@@ -1476,11 +1483,10 @@ ul { list-style: none; }
   <!-- ─── PRELOADER ──────────────────────────────────────── -->
   <div id="preloader" aria-hidden="true">
     <div class="preloader-inner">
-      <svg class="pl-logo-svg" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <text class="pl-d" x="4" y="64" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="72" fill="#4D9FFF">D</text>
-        <text class="pl-s" x="62" y="64" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="72" fill="#ffffff">S</text>
-      </svg>
-      <div class="pl-dot"></div>
+      <div class="pl-logo">
+        <span class="pl-logo-text">DS</span>
+        <span class="pl-logo-dot"></span>
+      </div>
       <div class="pl-bar"><div class="pl-bar-fill"></div></div>
     </div>
   </div>
@@ -2164,24 +2170,30 @@ ul { list-style: none; }
 ══════════════════════════════════════════════════════════ */
 function initPreloader() {
   const preloader = document.getElementById('preloader');
-  const plD       = document.querySelector('.pl-d');
-  const plS       = document.querySelector('.pl-s');
-  const plDot     = document.querySelector('.pl-dot');
+  const plLogo    = document.querySelector('.pl-logo');
   const plBarFill = document.querySelector('.pl-bar-fill');
 
-  gsap.to(plD, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out', delay: 0.1 });
-  gsap.to(plS, { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out', delay: 0.3 });
-  gsap.to(plDot, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)', delay: 0.55 });
+  // Set start position
+  gsap.set(plLogo, { opacity: 0, y: 16 });
 
+  // Step 1: logo slides + fades in as one block (text + dot together)
+  gsap.to(plLogo, {
+    opacity: 1,
+    y: 0,
+    duration: 0.55,
+    ease: 'power3.out',
+    delay: 0.15
+  });
+
+  // Step 2: progress bar fills up
   gsap.to(plBarFill, {
     width: '100%',
     duration: 1.4,
     ease: 'power2.inOut',
-    delay: 0.6,
+    delay: 0.55,
     onComplete: () => {
-      gsap.to(plD, { opacity: 0, y: -10, duration: 0.3, delay: 0.15 });
-      gsap.to(plS, { opacity: 0, y: -10, duration: 0.3, delay: 0.2 });
-      gsap.to(plDot, { opacity: 0, scale: 0, duration: 0.25, delay: 0.1 });
+      // Step 3: logo fades out, then preloader disappears
+      gsap.to(plLogo, { opacity: 0, y: -12, duration: 0.35, delay: 0.1 });
       gsap.to(preloader, {
         opacity: 0,
         duration: 0.5,
