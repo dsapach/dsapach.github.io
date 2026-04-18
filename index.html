@@ -92,7 +92,21 @@
     cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 32 32'%3E%3Cpath d='M4 4 Q4 3 5 3.5 L28 15 Q29.5 15.8 28 16.6 L18 21.5 L13 28.5 Q12 30 11 28.5 L4 5 Q3.5 3.5 4 4 Z' fill='%23ffffff' stroke='%234D9FFF' stroke-width='1.8' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E") 3 2, pointer !important;
   }
 }
+/* ══════════════════════════════════════════════════════════
+   FOOTER ICON FIX
+══════════════════════════════════════════════════════════ */
 
+.footer-icon {
+  opacity: 0.4;
+  transition: opacity .22s ease, filter .22s ease;
+}
+
+/* при hover делаем синий */
+.footer-social-link:hover .footer-icon {
+  opacity: 1;
+  filter: brightness(0) saturate(100%) invert(56%) sepia(94%) saturate(1645%) hue-rotate(194deg) brightness(101%) contrast(101%);
+}
+    
 /* ── DESIGN TOKENS ──────────────────────────────────────── */
 :root {
   --navy:       #0F1F3D;
@@ -2399,11 +2413,14 @@ ul { list-style: none; }
 
           <a href="https://www.linkedin.com/in/dsapach/" target="_blank" rel="noopener" class="contact-link linkedin-link">
             <span class="contact-link-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                <rect x="2" y="2" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.6"/>
-                <path d="M6 9v5M6 6.5v.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                <path d="M10 14v-3a2 2 0 0 1 4 0v3M10 9v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 
+  2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 
+  19h-3v-10h3v10zm-1.5-11.3c-1 0-1.8-.8-1.8-1.8s.8-1.8 
+  1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm13.5 
+  11.3h-3v-5.6c0-3.4-4-3.1-4 0v5.6h-3v-10h3v1.6c1.4-2.6 
+  7-2.8 7 2.5v5.9z"/>
+</svg>
             </span>
             <span>linkedin.com/in/dsapach</span>
           </a>
@@ -2444,24 +2461,31 @@ ul { list-style: none; }
           </svg>
         </a>
         <a href="https://t.me/dsapach" target="_blank" rel="noopener" class="footer-social-link" aria-label="Telegram">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21.8 2.6L2.4 10.1c-1.3.5-1.3 1.3-.2 1.6l4.8 1.5 1.8 5.6c.2.6.6.8 1 .5l2.8-2.6 5.5 4.1c1 .5 1.7.3 1.9-.9l3.4-16c.3-1.5-.5-2.1-1.6-1.3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-          </svg>
-        </a>
+  <img 
+  src="https://cdn.simpleicons.org/telegram/ffffff" 
+  width="18" 
+  height="18" 
+  alt="Telegram"
+  class="footer-icon"
+/>
+</a>
         <a href="https://www.linkedin.com/in/dsapach/" target="_blank" rel="noopener" class="footer-social-link" aria-label="LinkedIn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.7"/>
-            <path d="M7 10v7M7 7.5v.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-            <path d="M11 17v-3.5a2.5 2.5 0 0 1 5 0V17M11 10v7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+  <path d="M19 0h-14c-2.8 0-5 2.2-5 5v14c0 2.8 
+  2.2 5 5 5h14c2.8 0 5-2.2 5-5v-14c0-2.8-2.2-5-5-5zm-11 
+  19h-3v-10h3v10zm-1.5-11.3c-1 0-1.8-.8-1.8-1.8s.8-1.8 
+  1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm13.5 
+  11.3h-3v-5.6c0-3.4-4-3.1-4 0v5.6h-3v-10h3v1.6c1.4-2.6 
+  7-2.8 7 2.5v5.9z"/>
+</svg>
         </a>
         <a href="https://www.behance.net/dsapach" target="_blank" rel="noopener" class="footer-social-link" aria-label="Behance">
           <img 
-  src="https://cdn.simpleicons.org/behance/ffffff?viewbox=auto" 
+  src="https://cdn.simpleicons.org/behance/ffffff" 
   width="18" 
   height="18" 
   alt="Behance"
-  style="opacity:0.4;"
+  class="footer-icon"
 />
         </a>
       </div>
