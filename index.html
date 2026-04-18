@@ -1702,6 +1702,32 @@ ul { list-style: none; }
 
 /* ── FOCUS VISIBLE ───────────────────────────────────────── */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* ══════════════════════════════════════════════════════════
+   HERO SCROLL FIX
+══════════════════════════════════════════════════════════ */
+
+/* Чуть ниже на мобильных */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    bottom: 1.2rem;
+  }
+
+  .scroll-line {
+    height: 36px;
+  }
+
+  .scroll-label {
+    font-size: 0.65rem;
+  }
+}
+
+/* Если экран низкий — скрываем полностью */
+@media (max-height: 720px) {
+  .scroll-indicator {
+    display: none;
+  }
+}
+    
   </style>
 </head>
 <body>
