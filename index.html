@@ -3316,15 +3316,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (window.scrollY > 40) navbar.classList.add('scrolled');
 /* HERO LOTTIE */
-if (window.innerWidth > 900) {
-  lottie.loadAnimation({
-    container: document.getElementById('heroLottie'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: 'hero.json'
-  });
-}
+lottie.loadAnimation({
+  container: document.getElementById('heroLottie'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'hero.json'
+});
   
 });
   </script>
