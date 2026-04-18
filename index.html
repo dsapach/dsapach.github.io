@@ -655,9 +655,9 @@ ul { list-style: none; }
   position: relative;
 }
 .photo-wrap {
-  position: relative;
-  width: 340px;
-  height: 340px;
+  width: 380px;
+  height: 380px;
+}
 }
 .photo-img {
   width: 100%; height: 100%;
@@ -668,36 +668,24 @@ ul { list-style: none; }
   position: relative;
   z-index: 1;
 }
-.photo-ring {
-  position: absolute;
-  inset: -10px;
-  border-radius: 50%;
-  border: 1.5px solid var(--accent);
-  opacity: 1;
-  pointer-events: none;
-}
-.photo-ring::before {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1px solid rgba(77,159,255,.18);
 }
 .photo-badge {
   position: absolute;
-  bottom: 16px; right: -10px;
-  background: var(--accent);
+  bottom: 20px;
+  right: -6px;
+  background: rgba(77,159,255,.95);
   color: var(--white);
-  font-size: .78rem;
+  font-size: .75rem;
   font-weight: 600;
-  padding: .45rem .9rem;
+  padding: .4rem .8rem;
   border-radius: 50px;
   z-index: 2;
   display: flex;
   align-items: center;
   gap: .4rem;
-  box-shadow: var(--shadow-accent);
+  box-shadow: 0 8px 24px rgba(77,159,255,.35);
   white-space: nowrap;
+}
 }
 .about-decoration {
   position: absolute;
@@ -1479,21 +1467,6 @@ ul { list-style: none; }
   margin: 0 auto;
 }
 
-.available-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: .6rem;
-  font-size: .78rem;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.7);
-  background: rgba(77,159,255,.1);
-  border: 1px solid rgba(77,159,255,.2);
-  padding: .45rem 1rem;
-  border-radius: 50px;
-  margin-bottom: 2rem;
-}
 .pulse-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
@@ -1768,6 +1741,21 @@ ul { list-style: none; }
     display: none;
   }
 }
+
+.photo-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  position: relative;
+  z-index: 1;
+
+  box-shadow: 
+    0 25px 60px rgba(15,31,61,.18),
+    0 0 0 1px rgba(15,31,61,.04);
+}    
     
   </style>
 </head>
@@ -1884,10 +1872,9 @@ ul { list-style: none; }
 
         <div class="about-visual fade-up">
           <div class="photo-wrap">
-            <div class="photo-ring"></div>
             <img src="photo.jpg" alt="Denis Sapach" class="photo-img" />
             <div class="photo-badge">
-              <span>✦</span> Available
+          
             </div>
           </div>
           <div class="about-decoration" aria-hidden="true">
@@ -1903,7 +1890,7 @@ ul { list-style: none; }
             Design that tells<br/>a <em>story</em> in motion.
           </h2>
           <p class="about-bio">
-            I'm Denis — a Motion & UI Designer with over 5 years of experience 
+            I'm Denis — UI/UX Designer & Motion with 12+ years of hands-on experience
             creating purposeful animations and polished interfaces. My work sits at the intersection 
             of design and storytelling: every transition, every easing curve, every pixel serves a reason.
           </p>
