@@ -1741,6 +1741,33 @@ ul { list-style: none; }
     display: none;
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   HERO LOTTIE
+══════════════════════════════════════════════════════════ */
+
+.hero-lottie-wrapper {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 520px;
+  max-width: 45vw;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-lottie {
+  width: 100%;
+  height: 100%;
+}
+
+/* скрываем на мобильных */
+@media (max-width: 900px) {
+  .hero-lottie-wrapper {
+    display: none;
+  }
+}
     
   </style>
 </head>
@@ -1842,7 +1869,12 @@ ul { list-style: none; }
     <a href="#about" class="scroll-indicator" aria-label="Scroll down">
       <span class="scroll-label">Scroll</span>
       <span class="scroll-line"></span>
-    </a>
+    </a> 
+    
+<!-- HERO LOTTIE -->
+<div class="hero-lottie-wrapper">
+  <div id="heroLottie" class="hero-lottie"></div>
+</div>
   </section>
 
   <!-- ─── ABOUT ───────────────────────────────────────────── -->
@@ -3283,6 +3315,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initProgressBar();
 
   if (window.scrollY > 40) navbar.classList.add('scrolled');
+/* HERO LOTTIE */
+if (window.innerWidth > 900) {
+  lottie.loadAnimation({
+    container: document.getElementById('heroLottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: 'hero.json'
+  });
+}
+  
 });
   </script>
 </body>
