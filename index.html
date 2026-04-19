@@ -1328,44 +1328,6 @@ ul { list-style: none; }
 }
 
 .lottie-code-hint { max-width: 640px; margin: 0 auto; }
-.code-block {
-  background: #0d1b2e;
-  border: 1px solid rgba(77,159,255,.15);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-.code-header {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .75rem 1rem;
-  background: rgba(255,255,255,.03);
-  border-bottom: 1px solid rgba(255,255,255,.05);
-}
-.code-dot { width: 10px; height: 10px; border-radius: 50%; }
-.code-dot.red    { background: #FF5F57; }
-.code-dot.yellow { background: #FFBD2E; }
-.code-dot.green  { background: #28C840; }
-.code-filename {
-  font-size: .75rem;
-  color: rgba(255,255,255,.3);
-  margin-left: .5rem;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-}
-.code-content { padding: 1.5rem; overflow-x: auto; }
-.code-content code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: .82rem;
-  line-height: 1.9;
-}
-.c-keyword { color: #C792EA; }
-.c-var     { color: #82AAFF; }
-.c-obj     { color: #89DDFF; }
-.c-fn      { color: #82AAFF; }
-.c-prop    { color: #F07178; }
-.c-str     { color: #C3E88D; }
-.c-bool    { color: #FF9CAC; }
 
 /* ══════════════════════════════════════════════════════════
    CONTACT
@@ -2376,12 +2338,8 @@ I combine design systems, interaction design, and production‑ready motion to c
             <div class="lottie-placeholder">
               <div class="lottie-loader" style="animation-delay:0.6s"></div>
               <p class="lottie-note">
-                Connect via:<br/>
-                <code>lottie.loadAnimation({
-  container: el,
-  path: 'animations/anim3.json'
-})</code>
-              </p>
+                
+
             </div>
           </div>
           <div class="lottie-info">
@@ -2393,23 +2351,7 @@ I combine design systems, interaction design, and production‑ready motion to c
       </div>
 
       <div class="lottie-code-hint fade-up">
-        <div class="code-block">
-          <div class="code-header">
-            <span class="code-dot red"></span>
-            <span class="code-dot yellow"></span>
-            <span class="code-dot green"></span>
-            <span class="code-filename">animation-setup.js</span>
-          </div>
-          <pre class="code-content"><code><span class="c-keyword">const</span> <span class="c-var">anim</span> = <span class="c-obj">lottie</span>.<span class="c-fn">loadAnimation</span>({
-  <span class="c-prop">container</span>: <span class="c-obj">document</span>.<span class="c-fn">getElementById</span>(<span class="c-str">'lottie1'</span>),
-  <span class="c-prop">renderer</span>:  <span class="c-str">'svg'</span>,
-  <span class="c-prop">loop</span>:      <span class="c-bool">true</span>,
-  <span class="c-prop">autoplay</span>: <span class="c-bool">true</span>,
-  <span class="c-prop">path</span>:      <span class="c-str">'animations/loading.json'</span>
-});</code></pre>
-        </div>
-      </div>
-    </div>
+       
   </section>
 
   <!-- ─── CONTACT ────────────────────────────────────────── -->
