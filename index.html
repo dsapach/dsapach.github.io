@@ -993,12 +993,10 @@ ul { list-style: none; }
 
   width: 100%;
   max-width: 760px;
-  height: 90vh;           /* ✅ фиксированная высота */
-  
-  display: flex;
-  flex-direction: column;
+  max-height: 90vh;
 
-  overflow: hidden;
+  display: block;            /* ✅ убираем flex */
+  overflow-y: auto;          /* ✅ скролл здесь */
 }
 
 #projectModal.open .modal-box {
@@ -1008,9 +1006,9 @@ ul { list-style: none; }
 CSS
 
 .modal-hero {
-  flex: 0 0 auto;
-  max-height: 45%;        /* ✅ занимает не больше 45% модалки */
+  max-height: none;
   overflow: hidden;
+}
 }
 
 .modal-hero-visual {
@@ -1063,8 +1061,6 @@ CSS
 }
 
 .modal-body {
-  flex: 1;                /* ✅ занимает всё оставшееся место */
-  overflow-y: auto;       /* ✅ скролл только тут */
   padding: 40px 48px 60px;
 }
 
