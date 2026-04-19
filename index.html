@@ -1015,12 +1015,9 @@ ul { list-style: none; }
 }
 
 .modal-hero {
-  height: 480px;
   position: relative;
+  aspect-ratio: 16 / 9;
   background: #0F172A;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 
@@ -1144,8 +1141,7 @@ ul { list-style: none; }
 .modal-cover-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;   /* вместо cover */
-  background: #0F172A;   /* чтобы были аккуратные поля */
+  object-fit: cover;
 }
 
 .modal-hero-visual {
