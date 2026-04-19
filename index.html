@@ -990,12 +990,13 @@ ul { list-style: none; }
   z-index: 1;
   background: var(--white);
   border-radius: 28px;
-  display: flex;
-  flex-direction: column;
 
   width: 100%;
-  max-width: 780px;     /* ✅ ВАЖНО — делаем уже */
-  max-height: 90vh;
+  max-width: 760px;
+  height: 90vh;           /* ✅ фиксированная высота */
+  
+  display: flex;
+  flex-direction: column;
 
   overflow: hidden;
 }
@@ -1007,9 +1008,9 @@ ul { list-style: none; }
 CSS
 
 .modal-hero {
-  position: relative;
-  padding: 0;
-  background: transparent;
+  flex: 0 0 auto;
+  max-height: 45%;        /* ✅ занимает не больше 45% модалки */
+  overflow: hidden;
 }
 
 .modal-hero-visual {
@@ -1019,7 +1020,8 @@ CSS
 
 .modal-cover-img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;    /* ✅ всегда полностью видна */
   display: block;
 }
 
@@ -1061,9 +1063,9 @@ CSS
 }
 
 .modal-body {
+  flex: 1;                /* ✅ занимает всё оставшееся место */
+  overflow-y: auto;       /* ✅ скролл только тут */
   padding: 40px 48px 60px;
-  overflow-y: auto;
-  flex: 1;
 }
 
 .modal-meta {
