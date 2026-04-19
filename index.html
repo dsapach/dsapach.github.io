@@ -992,8 +992,8 @@ ul { list-style: none; }
   z-index: 1;
   background: var(--white);
   border-radius: 32px;
-  max-width: 860px;
-  width: 100%;
+  width: min(92vw, 1200px);
+  max-width: none;
   box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
 
   display: flex;
@@ -2228,8 +2228,6 @@ I combine design systems, interaction design, and production‑ready motion to c
 
       <!-- Dynamic content injected here -->
       <div class="modal-hero" id="modalHero" style="--modal-hue: 220deg">
-        <div class="modal-hero-grid"></div>
-        <div class="modal-hero-glow"></div>
         <div class="modal-hero-visual" id="modalHeroVisual"></div>
         <span class="modal-tag-badge" id="modalTagBadge">Category</span>
       </div>
