@@ -1006,25 +1006,26 @@ ul { list-style: none; }
 .modal-hero {
   position: relative;
   background: #0F172A;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 400px; /* ✅ минимальная высота */
+  padding: 40px 40px 0;
 }
     
 .modal-hero-visual {
   width: 100%;
-  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .modal-cover-img {
   width: 100%;
   height: auto;
-  display: block;
-  object-fit: cover; /* ✅ вернул cover */
-  min-height: 400px; /* ✅ минимальная высота */
-  max-height: 65vh; /* ✅ но не больше 65% экрана */
+  max-width: 900px;       /* твой реальный размер */
+  max-height: 70vh;       /* чтобы не вылезала за экран */
+  object-fit: contain;    /* ВАЖНО — без обрезания */
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
 }
 
 .modal-hero-icon {
