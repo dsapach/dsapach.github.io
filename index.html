@@ -1096,7 +1096,41 @@ ul { list-style: none; }
   font-weight: 600;
   margin: 0 8px 8px 0;
 }
+    
+/* ══════════════════════════════════════════════════════════
+   MODAL SCROLLBAR FIX
+══════════════════════════════════════════════════════════ */
 
+/* 1. Стили для Chrome, Safari и Edge */
+.modal-box::-webkit-scrollbar {
+  width: 6px; /* Очень тонкий */
+}
+
+.modal-box::-webkit-scrollbar-track {
+  background: transparent; /* Полностью прозрачный фон трека */
+  margin: 20px 0; /* Отступы сверху и снизу, чтобы скролл не упирался в края */
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+  background: #E2E8F0; /* Светло-серый, под цвет границ */
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.modal-box::-webkit-scrollbar-thumb:hover {
+  background: var(--accent); /* Синий при наведении */
+}
+
+/* 2. Стили для Firefox */
+.modal-box {
+  scrollbar-width: thin;
+  scrollbar-color: #E2E8F0 transparent;
+}
+
+/* Маленький фикс для отступов внизу модалки */
+.modal-body {
+  padding-bottom: 60px; /* Чтобы контент не прилипал к низу при скролле */
+}
 /* ══════════════════════════════════════════════════════════
    SHOWREEL
 ══════════════════════════════════════════════════════════ */
