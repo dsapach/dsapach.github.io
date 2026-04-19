@@ -1003,25 +1003,29 @@ ul { list-style: none; }
   transform: translateY(0) scale(1);
 }
 
+CSS
+
 .modal-hero {
   position: relative;
-  background: transparent;
-  padding: 0;
-  display: block;
+  background: #0F172A; /* тёмный фон вместо белых полей */
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-    
+
 .modal-hero-visual {
   width: 100%;
-  line-height: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .modal-cover-img {
-  width: 100%;
+  width: auto;
   height: auto;
+  max-width: 90%;
   max-height: 75vh;
   object-fit: contain;
-  border-radius: 0;
-  box-shadow: none;
   display: block;
 }
 
