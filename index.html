@@ -1140,6 +1140,19 @@ ul { list-style: none; }
 .modal-body {
   padding-bottom: 60px; /* Чтобы контент не прилипал к низу при скролле */
 }
+
+.modal-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-hero-visual {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
 /* ══════════════════════════════════════════════════════════
    SHOWREEL
 ══════════════════════════════════════════════════════════ */
@@ -2071,8 +2084,8 @@ I combine design systems, interaction design, and production‑ready motion to c
             </div>
           </div>
           <div class="card-body">
-            <span class="card-tag">UI Animation</span>
-            <h3 class="card-title">App Onboarding Flow</h3>
+            <span class="card-tag">Product design</span>
+            <h3 class="card-title">End Overdose (US Nonprofit)</h3>
           </div>
         </div>
 
@@ -2491,23 +2504,18 @@ I combine design systems, interaction design, and production‑ready motion to c
 const PROJECTS = [
   {
     id: 0,
-    title: 'App Onboarding Flow',
-    category: 'UI Animation',
-    categorySlug: 'ui-animation',
-    year: '2025',
-    hue: '220deg',
-    client: 'FinTech Startup',
-    duration: '3 weeks',
-    deliverables: 'Lottie + Figma',
-    description: 'A complete onboarding animation system for a mobile banking app. Each screen features carefully timed entrance animations, micro-interactions on form fields, and a celebratory success state. The flow reduced user drop-off during signup by 34% in A/B testing.',
-    tools: ['After Effects', 'Lottie', 'Figma', 'BodyMovin'],
-    behanceUrl: 'https://www.behance.net/dsapach',
-    svgIcon: `<svg width="120" height="120" viewBox="0 0 120 120" fill="none">
-      <rect x="20" y="18" width="80" height="56" rx="8" stroke="#4D9FFF" stroke-width="2.5" opacity="0.5"/>
-      <path d="M44 52 l12 10 20-20" stroke="#4D9FFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
-      <rect x="30" y="80" width="60" height="6" rx="3" fill="#4D9FFF" opacity="0.25"/>
-      <rect x="40" y="92" width="40" height="6" rx="3" fill="#4D9FFF" opacity="0.15"/>
-    </svg>`
+  title: 'End Overdose — Product Redesign',
+  category: 'Product UI/UX',
+  categorySlug: 'ui-design',
+  year: '2026',
+  hue: '210deg',
+  client: 'End Overdose (US Nonprofit)',
+  duration: '2024–2026',
+  deliverables: 'UX Strategy · Design System · Motion',
+  description: 'Led product design for a US-based nonprofit focused on harm reduction. Modernized the visual system, redesigned user flows, structured educational courses, and built a scalable UI foundation for internal and public tools.',
+  tools: ['Figma', 'After Effects', 'Lottie', 'HTML/CSS'],
+  behanceUrl: 'https://www.behance.net/dsapach',
+  coverImage: 'end-overdose-cover.jpg'
   },
   {
     id: 1,
@@ -2909,7 +2917,19 @@ function initProjectModal() {
     hero.style.setProperty('--modal-hue', project.hue);
 
     // Заполняем контент
-    document.getElementById('modalHeroVisual').innerHTML = `<div class="modal-hero-icon">${project.svgIcon}</div>`;
+    const heroVisual = document.getElementById('modalHeroVisual');
+
+if (project.coverImage) {
+  heroVisual.innerHTML = `
+    <img src="${project.coverImage}" 
+         alt="${project.title}" 
+         class="modal-cover-img">
+  `;
+} else {
+  heroVisual.innerHTML = `
+    <div class="modal-hero-icon">${project.svgIcon}</div>
+  `;
+}
     document.getElementById('modalTagBadge').textContent = project.category;
     document.getElementById('modalYear').textContent = project.year;
     document.getElementById('modalCategory').textContent = project.category;
