@@ -3153,24 +3153,6 @@ function initSmoothScroll() {
   });
 }
 
-/* ══════════════════════════════════════════════════════════
-   10. CARD TILT
-══════════════════════════════════════════════════════════ */
-function initCardTilt() {
-  if (window.matchMedia('(hover: none)').matches) return;
-
-  document.querySelectorAll('.skill-card, .lottie-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width  - 0.5;
-      const y = (e.clientY - rect.top)  / rect.height - 0.5;
-      gsap.to(card, { rotationY: x * 8, rotationX: -y * 8, transformPerspective: 800, ease: 'power1.out', duration: .3 });
-    });
-    card.addEventListener('mouseleave', () => {
-      gsap.to(card, { rotationY: 0, rotationX: 0, duration: .5, ease: 'elastic.out(1,.75)' });
-    });
-  });
-}
 
 /* ══════════════════════════════════════════════════════════
    11. COUNTERS
@@ -3198,24 +3180,6 @@ function initCounters() {
   }, { threshold: 1 });
 
   stats.forEach(stat => observer.observe(stat));
-}
-
-/* ══════════════════════════════════════════════════════════
-   12. PROGRESS BAR
-══════════════════════════════════════════════════════════ */
-function initProgressBar() {
-  const bar = document.createElement('div');
-  bar.style.cssText = `
-    position:fixed;top:0;left:0;height:2px;z-index:2000;
-    background:linear-gradient(90deg,#4D9FFF,#A855F7);
-    width:0%;transition:width .1s linear;pointer-events:none;
-  `;
-  document.body.appendChild(bar);
-
-  window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
-    bar.style.width = pct + '%';
-  }, { passive: true });
 }
 
 /* ══════════════════════════════════════════════════════════
