@@ -1000,9 +1000,15 @@ ul { list-style: none; }
 
   scrollbar-gutter: stable;
 }
+.modal-box {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE/Edge */
+}
 
-    
-    
+.modal-box::-webkit-scrollbar {
+  display: none;              /* Chrome/Safari */
+}
+   
 CSS
 
 .modal-hero {
@@ -1910,11 +1916,6 @@ CSS
         <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Happy clients</span></div>
       </div>
     </div>
-
-    <a href="#about" class="scroll-indicator" aria-label="Scroll down">
-      <span class="scroll-label">Scroll</span>
-      <span class="scroll-line"></span>
-    </a> 
     
 <!-- HERO LOTTIE -->
 <div class="hero-lottie-wrapper">
