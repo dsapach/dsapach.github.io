@@ -992,8 +992,8 @@ ul { list-style: none; }
   z-index: 1;
   background: var(--white);
   border-radius: 32px;
-  width: min(92vw, 1200px);
-  max-width: none;
+  max-height: none;
+  overflow: visible;
   box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
 
   display: flex;
@@ -1016,10 +1016,8 @@ ul { list-style: none; }
 
 .modal-hero {
   position: relative;
-  aspect-ratio: 16 / 9;
   background: #0F172A;
   overflow: hidden;
-  padding: 0;
 }
 
 
@@ -3210,9 +3208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initShowreel();
   initLottieAnimations();
   initSmoothScroll();
-  initCardTilt();
   initCounters();
-  initProgressBar();
 
   if (window.scrollY > 40) navbar.classList.add('scrolled');
 /* HERO LOTTIE */
