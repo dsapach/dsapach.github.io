@@ -1439,7 +1439,7 @@ CSS
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.05),
-    0 20px 40px rgba(15,31,61,0.25);
+    0 20px px rgba(15,31,61,0.15);
 }
 .lottie-container::after {
   content: "";
@@ -1452,8 +1452,36 @@ CSS
     rgba(0,0,0,0.35),
     transparent 70%
   );
-  filter: blur(10px);
+  filter: blur(12px);
   opacity: 0.6;
+}
+.lottie-bg-trophy {
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 190, 60, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #1b2e52 0%, #0f1f3d 100%);
+}
+.lottie-bg-coin {
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(168, 85, 247, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #1a2850 0%, #0e1c36 100%);
+}
+  .lottie-bg-mage {
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 120, 40, 0.35),
+      transparent 60%
+    ),
+    linear-gradient(180deg, #162845 0%, #0c1a30 100%);
+}
 }
 /* Уменьшаем сами анимации */
 .lottie-animation,
@@ -2452,7 +2480,7 @@ I combine design systems, interaction design, and production‑ready motion to c
 
   <!-- LOTTIE 1 (локальный 1.json) -->
   <div class="lottie-card fade-up">
-    <div class="lottie-container"
+    <div class="lottie-container lottie-bg-trophy"
          data-lottie-type="json"
          data-lottie-src="1.json">
       <div class="lottie-placeholder">
@@ -2467,7 +2495,7 @@ I combine design systems, interaction design, and production‑ready motion to c
 
   <!-- LOTTIE 2 (lottie.host) -->
   <div class="lottie-card fade-up">
-    <div class="lottie-container">
+    <div class="lottie-container lottie-bg-coin">
       <dotlottie-player
         src="https://lottie.host/2cdef636-1ed1-4c5d-b2bc-8414fbb57e05/1kATbJGZMq.lottie"
         background="transparent"
@@ -2485,7 +2513,7 @@ I combine design systems, interaction design, and production‑ready motion to c
 
   <!-- LOTTIE 3 (локальный 2.json) -->
   <div class="lottie-card fade-up">
-    <div class="lottie-container"
+    <div class="lottie-container lottie-bg-mage"
          data-lottie-type="json"
          data-lottie-src="2.json">
       <div class="lottie-placeholder">
