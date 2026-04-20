@@ -3028,27 +3028,27 @@ function initProjectModal() {
 
   function openModal(projectIndex) {
     const project = PROJECTS[projectIndex];
-    if (!project) return; // Сначала проверяем, есть ли проект!
+    if (!project) return;
 
     const hero = document.getElementById('modalHero');
-    // Теперь безопасно ставим цвет
     hero.style.setProperty('--accent-glow', `hsl(${project.hue}, 100%, 50%)`);
     hero.style.setProperty('--modal-hue', project.hue);
 
     // Заполняем контент
     const heroVisual = document.getElementById('modalHeroVisual');
 
-if (project.coverImage) {
-  heroVisual.innerHTML = `
-    <img src="${project.coverImage}" 
-         alt="${project.title}" 
-         class="modal-cover-img">
-  `;
-} else {
-  heroVisual.innerHTML = `
-    <div class="modal-hero-icon">${project.svgIcon}</div>
-  `;
-}
+    if (project.coverImage) {
+      heroVisual.innerHTML = `
+        <img src="${project.coverImage}" 
+             alt="${project.title}" 
+             class="modal-cover-img">
+      `;
+    } else {
+      heroVisual.innerHTML = `
+        <div class="modal-hero-icon">${project.svgIcon}</div>
+      `;
+    }
+
     document.getElementById('modalTagBadge').textContent = project.category;
     document.getElementById('modalYear').textContent = project.year;
     document.getElementById('modalCategory').textContent = project.category;
@@ -3062,6 +3062,30 @@ if (project.coverImage) {
     toolsEl.innerHTML = project.tools
       .map(t => `<span class="modal-tool-tag">${t}</span>`)
       .join('');
+
+    // ✅ ИСПРАВЛЕНИЕ: Обновляем кнопки
+    const modalCta = document.getElementById('modalCta');
+    const modalSecondary = document.getElementById('modalSecondary');
+
+    // Кнопка "Discuss Similar Project" → закрывает модалку и скроллит к контактам
+    modalCta.onclick = (e) => {
+      e.preventDefault();
+      closeModal();
+      setTimeout(() => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 400); // Ждём пока модалка закроется
+    };
+
+    // Кнопка "View on Behance" → открывает Behance в новой вкладке
+    if (project.behanceUrl) {
+      modalSecondary.href = project.behanceUrl;
+      modalSecondary.target = '_blank';
+      modalSecondary.rel = 'noopener noreferrer';
+      modalSecondary.onclick = null; // Убираем перехват
+    }
 
     modalBox.scrollTop = 0;
     modal.classList.add('open');
