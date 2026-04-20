@@ -1389,10 +1389,70 @@ CSS
 }
 
 .lottie-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  <div class="lottie-grid">
+
+  <!-- LOTTIE 1: JSON из папки -->
+  <div class="lottie-card fade-up" style="--delay:0s">
+    <div class="lottie-container" 
+         data-lottie-type="json" 
+         data-lottie-src="1.json" 
+         id="lottie1">
+      <div class="lottie-placeholder">
+        <div class="lottie-loader"></div>
+        <p class="lottie-note">
+          Loading animation...<br/>
+          <code>animations/loading.json</code>
+        </p>
+      </div>
+    </div>
+    <div class="lottie-info">
+      <h3>Loading Animation</h3>
+      <p>Micro-interaction for app loading states</p>
+    </div>
+  </div>
+
+  <!-- LOTTIE 2: DotLottie с Lottie Host -->
+  <div class="lottie-card fade-up" style="--delay:0.12s">
+    <div class="lottie-container lottie-container--dotlottie" 
+         data-lottie-type="dotlottie"
+         data-lottie-src="https://lottie.host/2cdef636-1ed1-4c5d-b2bc-8414fbb57e05/1kATbJGZMq.lottie"
+         id="lottie2">
+      <dotlottie-player 
+        src="https://lottie.host/2cdef636-1ed1-4c5d-b2bc-8414fbb57e05/1kATbJGZMq.lottie" 
+        background="transparent" 
+        speed="1" 
+        style="width: 100%; height: 100%;" 
+        loop 
+        autoplay>
+      </dotlottie-player>
+    </div>
+    <div class="lottie-info">
+      <h3>Success State</h3>
+      <p>Celebratory animation for completed actions</p>
+    </div>
+  </div>
+
+  <!-- LOTTIE 3: JSON из папки -->
+  <div class="lottie-card fade-up" style="--delay:0.24s">
+    <div class="lottie-container" 
+         data-lottie-type="json"
+         data-lottie-src="animations/2.json"
+         id="lottie3">
+      <div class="lottie-placeholder">
+        <div class="lottie-loader" style="animation-delay:0.6s"></div>
+        <p class="lottie-note">
+          Loading animation...<br/>
+          <code>animations/icons.json</code>
+        </p>
+      </div>
+    </div>
+    <div class="lottie-info">
+      <h3>Icon Animation</h3>
+      <p>Animated icon set for navigation & UI feedback</p>
+    </div>
+  </div>
+
+</div>
 }
 
 .lottie-card {
@@ -1412,6 +1472,37 @@ CSS
   aspect-ratio: 1;
   position: relative;
   background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  overflow: hidden;
+}
+
+/* JSON анимации через lottie-web */
+.lottie-container[data-lottie-type="json"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DotLottie анимации */
+.lottie-container--dotlottie,
+.lottie-container[data-lottie-type="dotlottie"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lottie-container--dotlottie dotlottie-player,
+.lottie-container[data-lottie-type="dotlottie"] dotlottie-player {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Контейнер для загруженной JSON анимации */
+.lottie-container .lottie-animation {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
 }
 .lottie-placeholder {
   position: absolute;
@@ -3157,142 +3248,97 @@ function initShowreel() {
 }
 
 /* ══════════════════════════════════════════════════════════
-   8. LOTTIE DEMO ANIMATIONS
+   8. LOTTIE ANIMATIONS (Universal Loader)
 ══════════════════════════════════════════════════════════ */
 function initLottieAnimations() {
-  const DEMO_ANIMATIONS = [
-    { id: 'lottie1', color: '#4D9FFF', shape: 'circle' },
-    { id: 'lottie2', color: '#00DDB3', shape: 'check'  },
-    { id: 'lottie3', color: '#A855F7', shape: 'star'   },
-  ];
+  const containers = document.querySelectorAll('.lottie-container[data-lottie-type]');
 
-  DEMO_ANIMATIONS.forEach(({ id, color, shape }) => {
-    const container = document.getElementById(id);
-    if (!container) return;
+  containers.forEach(container => {
+    const type = container.dataset.lottieType;
+    const src = container.dataset.lottieSrc;
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          loadDemoAnimation(container, color, shape);
-          observer.unobserve(container);
-        }
-      });
-    }, { threshold: 0.3 });
+    // Пропускаем dotlottie — они загружаются автоматически через веб-компонент
+    if (type === 'dotlottie') return;
 
-    observer.observe(container);
+    // Для JSON файлов используем Intersection Observer
+    if (type === 'json') {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadJSONAnimation(container, src);
+            observer.unobserve(container);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      observer.observe(container);
+    }
   });
 }
 
-function loadDemoAnimation(container, color, shape) {
+function loadJSONAnimation(container, path) {
   const placeholder = container.querySelector('.lottie-placeholder');
   if (!placeholder) return;
 
+  // Анимация скрытия placeholder
   gsap.to(placeholder, {
-    opacity: 0, duration: .4,
+    opacity: 0,
+    duration: 0.4,
     onComplete: () => {
       placeholder.style.display = 'none';
 
-      const svgNS   = 'http://www.w3.org/2000/svg';
-      const wrapper = document.createElement('div');
-      wrapper.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;';
+      // Создаём контейнер для Lottie
+      const animationWrapper = document.createElement('div');
+      animationWrapper.className = 'lottie-animation';
+      container.appendChild(animationWrapper);
 
-      const svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('viewBox', '0 0 120 120');
-      svg.setAttribute('width', '120');
-      svg.setAttribute('height', '120');
-      svg.style.overflow = 'visible';
-
-      const ring1 = document.createElementNS(svgNS, 'circle');
-      ring1.setAttribute('cx', '60'); ring1.setAttribute('cy', '60');
-      ring1.setAttribute('r', '48');
-      ring1.setAttribute('fill', 'none');
-      ring1.setAttribute('stroke', color);
-      ring1.setAttribute('stroke-width', '2');
-      ring1.setAttribute('stroke-dasharray', '301');
-      ring1.setAttribute('stroke-dashoffset', '301');
-      ring1.setAttribute('stroke-linecap', 'round');
-      ring1.setAttribute('opacity', '0.3');
-
-      const inner = document.createElementNS(svgNS, shape === 'check' ? 'path' : shape === 'star' ? 'polygon' : 'circle');
-
-      if (shape === 'circle') {
-        inner.setAttribute('cx', '60'); inner.setAttribute('cy', '60');
-        inner.setAttribute('r', '22');
-        inner.setAttribute('fill', 'none');
-        inner.setAttribute('stroke', color);
-        inner.setAttribute('stroke-width', '3');
-        inner.setAttribute('opacity', '0.8');
-      } else if (shape === 'check') {
-        inner.setAttribute('d', 'M38 60 l16 16 28-28');
-        inner.setAttribute('fill', 'none');
-        inner.setAttribute('stroke', color);
-        inner.setAttribute('stroke-width', '4');
-        inner.setAttribute('stroke-linecap', 'round');
-        inner.setAttribute('stroke-linejoin', 'round');
-        inner.setAttribute('stroke-dasharray', '60');
-        inner.setAttribute('stroke-dashoffset', '60');
-      } else if (shape === 'star') {
-        inner.setAttribute('points', '60,32 66,50 86,50 70,62 76,80 60,68 44,80 50,62 34,50 54,50');
-        inner.setAttribute('fill', color);
-        inner.setAttribute('opacity', '0.7');
-      }
-
-      const spinRing = document.createElementNS(svgNS, 'circle');
-      spinRing.setAttribute('cx', '60'); spinRing.setAttribute('cy', '60');
-      spinRing.setAttribute('r', '48');
-      spinRing.setAttribute('fill', 'none');
-      spinRing.setAttribute('stroke', color);
-      spinRing.setAttribute('stroke-width', '2.5');
-      spinRing.setAttribute('stroke-dasharray', '50 250');
-      spinRing.setAttribute('stroke-linecap', 'round');
-
-      svg.appendChild(ring1);
-      svg.appendChild(inner);
-      svg.appendChild(spinRing);
-      wrapper.appendChild(svg);
-      container.appendChild(wrapper);
-
-      gsap.to(spinRing, {
-        rotation: 360,
-        transformOrigin: '60px 60px',
-        duration: 2,
-        ease: 'linear',
-        repeat: -1
-      });
-
-      gsap.to(ring1, {
-        attr: { 'stroke-dashoffset': 0 },
-        duration: 1.5,
-        ease: 'power2.inOut',
-        repeat: -1,
-        yoyo: true
-      });
-
-      if (shape === 'check') {
-        gsap.to(inner, {
-          attr: { 'stroke-dashoffset': 0 },
-          duration: .8,
-          ease: 'power2.out',
-          delay: .3,
-          repeat: -1,
-          repeatDelay: 1.5,
-          yoyo: true,
-          yoyoEase: 'power2.in'
+      // Загружаем анимацию
+      try {
+        const animation = lottie.loadAnimation({
+          container: animationWrapper,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: path
         });
+
+        // Плавное появление
+        gsap.from(animationWrapper, {
+          opacity: 0,
+          scale: 0.85,
+          duration: 0.5,
+          ease: 'back.out(1.7)'
+        });
+
+        // Обработка ошибок
+        animation.addEventListener('data_failed', () => {
+          console.error(`Failed to load Lottie: ${path}`);
+          showFallback(container, path);
+        });
+
+      } catch (error) {
+        console.error(`Lottie error for ${path}:`, error);
+        showFallback(container, path);
       }
-
-      gsap.to(inner, {
-        scale: shape === 'star' ? 1.15 : 1.08,
-        transformOrigin: '60px 60px',
-        duration: 1.2,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true
-      });
-
-      gsap.from(wrapper, { opacity: 0, scale: .8, duration: .5, ease: 'back.out(1.7)' });
     }
   });
+}
+
+// Fallback если JSON не загрузился
+function showFallback(container, path) {
+  const fallback = document.createElement('div');
+  fallback.className = 'lottie-placeholder';
+  fallback.innerHTML = `
+    <div style="text-align:center; padding:2rem; color:rgba(255,255,255,0.5);">
+      <p style="font-size:0.85rem; margin-bottom:0.5rem;">⚠️ Animation not found</p>
+      <code style="font-size:0.7rem; opacity:0.6;">${path}</code>
+      <p style="font-size:0.7rem; margin-top:1rem; opacity:0.4;">
+        Place your .json file in the correct path
+      </p>
+    </div>
+  `;
+  container.appendChild(fallback);
+  gsap.from(fallback, { opacity: 0, duration: 0.3 });
 }
 
 /* ══════════════════════════════════════════════════════════
