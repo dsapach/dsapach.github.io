@@ -1385,6 +1385,7 @@ CSS
 /* ══════════════════════════════════════════════════════════
    LOTTIE SHOWCASE
 ══════════════════════════════════════════════════════════ */
+
 #lottie-showcase {
   padding: var(--section-py) 0;
   background: var(--bg2);
@@ -1396,70 +1397,6 @@ CSS
   gap: 1.5rem;
 }
 
-  <!-- LOTTIE 1: JSON из папки -->
-  <div class="lottie-card fade-up" style="--delay:0s">
-    <div class="lottie-container" 
-         data-lottie-type="json" 
-         data-lottie-src="1.json" 
-         id="lottie1">
-      <div class="lottie-placeholder">
-        <div class="lottie-loader"></div>
-        <p class="lottie-note">
-          Loading animation...<br/>
-          <code>animations/loading.json</code>
-        </p>
-      </div>
-    </div>
-    <div class="lottie-info">
-      <h3>Loading Animation</h3>
-      <p>Micro-interaction for app loading states</p>
-    </div>
-  </div>
-
-  <!-- LOTTIE 2: DotLottie с Lottie Host -->
-  <div class="lottie-card fade-up" style="--delay:0.12s">
-    <div class="lottie-container lottie-container--dotlottie" 
-         data-lottie-type="dotlottie"
-         data-lottie-src="https://lottie.host/2cdef636-1ed1-4c5d-b2bc-8414fbb57e05/1kATbJGZMq.lottie"
-         id="lottie2">
-      <dotlottie-player 
-        src="https://lottie.host/2cdef636-1ed1-4c5d-b2bc-8414fbb57e05/1kATbJGZMq.lottie" 
-        background="transparent" 
-        speed="1" 
-        style="width: 100%; height: 100%;" 
-        loop 
-        autoplay>
-      </dotlottie-player>
-    </div>
-    <div class="lottie-info">
-      <h3>Success State</h3>
-      <p>Celebratory animation for completed actions</p>
-    </div>
-  </div>
-
-  <!-- LOTTIE 3: JSON из папки -->
-  <div class="lottie-card fade-up" style="--delay:0.24s">
-    <div class="lottie-container" 
-         data-lottie-type="json"
-         data-lottie-src="1.json"
-         id="lottie3">
-      <div class="lottie-placeholder">
-        <div class="lottie-loader" style="animation-delay:0.6s"></div>
-        <p class="lottie-note">
-          Loading animation...<br/>
-          <code>animations/icons.json</code>
-        </p>
-      </div>
-    </div>
-    <div class="lottie-info">
-      <h3>Icon Animation</h3>
-      <p>Animated icon set for navigation & UI feedback</p>
-    </div>
-  </div>
-
-</div>
-}
-
 .lottie-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -1467,6 +1404,7 @@ CSS
   overflow: hidden;
   transition: transform .3s ease, box-shadow .3s ease;
 }
+
 .lottie-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-md);
@@ -1478,75 +1416,15 @@ CSS
   position: relative;
   background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
   overflow: hidden;
-}
-
-/* JSON анимации через lottie-web */
-.lottie-container[data-lottie-type="json"] {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* DotLottie анимации */
-.lottie-container--dotlottie,
-.lottie-container[data-lottie-type="dotlottie"] {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.lottie-info {
+  padding: 1.25rem 1.5rem;
 }
 
-.lottie-container--dotlottie dotlottie-player,
-.lottie-container[data-lottie-type="dotlottie"] dotlottie-player {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-/* Контейнер для загруженной JSON анимации */
-.lottie-container .lottie-animation {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  inset: 0;
-}
-.lottie-placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 2rem;
-}
-.lottie-loader {
-  width: 48px; height: 48px;
-  border-radius: 50%;
-  border: 2.5px solid rgba(77,159,255,.2);
-  border-top-color: var(--accent);
-  animation: spin 1.2s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.lottie-note {
-  font-size: .72rem;
-  color: rgba(255,255,255,.35);
-  text-align: center;
-  line-height: 1.7;
-}
-.lottie-note code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: .7rem;
-  color: rgba(77,159,255,.7);
-  background: rgba(77,159,255,.06);
-  padding: .6rem .8rem;
-  border-radius: var(--radius-sm);
-  display: inline-block;
-  text-align: left;
-  white-space: pre;
-  margin-top: .4rem;
-}
-
-.lottie-info { padding: 1.25rem 1.5rem; }
 .lottie-info h3 {
   font-family: var(--font-head);
   font-size: .95rem;
@@ -1554,13 +1432,13 @@ CSS
   color: var(--text);
   margin-bottom: .3rem;
 }
+
 .lottie-info p {
   font-size: .82rem;
   color: var(--text-muted);
 }
 
-.lottie-code-hint { max-width: 640px; margin: 0 auto; }
-
+    
 /* ══════════════════════════════════════════════════════════
    CONTACT
 ══════════════════════════════════════════════════════════ */
