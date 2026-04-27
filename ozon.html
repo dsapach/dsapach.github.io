@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Ozon Cards</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     background: #0b0b0e;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -16,9 +16,9 @@
     align-items: center;
     justify-content: center;
     color: #fff;
+    touch-action: pan-y; /* Разрешаем вертикальный скролл, но не мешаем горизонтальному свайпу */
   }
 
-  /* LOADER */
   #loader {
     position: fixed; inset: 0;
     display: flex; flex-direction: column;
@@ -38,7 +38,6 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   #loader p { margin-top: 16px; color: rgba(255,255,255,.6); font-size: 14px; }
 
-  /* VIEWER */
   #viewer { display: none; width: 100%; height: 100%; position: relative; }
   .header {
     position: fixed; top: 0; left: 0; right: 0;
@@ -59,19 +58,26 @@
   .slider-wrap { width: 100%; height: 100%; overflow: hidden; position: relative; }
   .track {
     display: flex; height: 100%;
-    transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
     will-change: transform;
+    /* Важно: отключаем выделение и контекстное меню для чистого свайпа */
+    user-select: none;
+    -webkit-user-select: none;
   }
   .slide {
     min-width: 100vw; height: 100%;
     display: flex; align-items: center; justify-content: center;
     padding: 70px 12px 80px;
+    /* Запрещаем драг картинок, чтобы не мешал свайпу */
+    -webkit-user-drag: none;
   }
   .slide img {
     max-height: 100%; max-width: 100%;
     object-fit: contain; border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0,0,0,.5);
-    transition: opacity .3s;
+    pointer-events: none; /* Картинка не перехватывает тачи */
+    -webkit-user-drag: none;
+    user-select: none;
   }
 
   .nav-btn {
@@ -141,28 +147,30 @@
 <script>
 (function() {
   // ================= КОНФИГ =================
-  const FOLDER = 'ozon/'; // папка с картинками относительно этого файла
+  const FOLDER = 'ozon/';
   const FILES  = [
-    // ВСТАВЬТЕ СЮДА ИМЕНА ФАЙЛОВ. Можно сгенерировать автоматически (см. комментарии ниже)
-    '1.png', '2.png', '3.png', '4.png'
+    '1.png', '2.png', '3.png', '4.png' // ← замените на свои
   ];
   // ==========================================
 
-  const loader    = document.getElementById('loader');
-  const loadText  = document.getElementById('loadText');
-  const viewer    = document.getElementById('viewer');
-  const track     = document.getElementById('track');
-  const counter   = document.getElementById('counter');
-  const dotsCont  = document.getElementById('dots');
-  const prevBtn   = document.getElementById('prevBtn');
-  const nextBtn   = document.getElementById('nextBtn');
+  const loader = document.getElementById('loader');
+  const loadText = document.getElementById('loadText');
+  const viewer = document.getElementById('viewer');
+  const track = document.getElementById('track');
+  const counter = document.getElementById('counter');
+  const dotsCont = document.getElementById('dots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
   let currentIndex = 0;
   let validFiles = [];
-  let startX = 0, prevTranslate = 0, currentTranslate = 0;
+  
+  // Состояние свайпа
   let isDragging = false;
+  let startX = 0;
+  let startTranslate = 0;
 
-  // 1. Предзагрузка изображений
+  // 1. Предзагрузка
   function preload() {
     let loaded = 0;
     const total = FILES.length;
@@ -175,7 +183,7 @@
         if (loaded === total) initViewer();
       };
       img.onerror = () => {
-        console.warn(`Не удалось загрузить: ${file}`);
+        console.warn(`Не загружено: ${file}`);
         loaded++;
         if (loaded === total) initViewer();
       };
@@ -183,14 +191,13 @@
       validFiles.push(file);
     });
 
-    // Фолбэк, если файлы уже в кеше или загрузка мгновенная
-    setTimeout(() => { if (loader.classList.contains('hidden')) return; initViewer(); }, 1500);
+    setTimeout(() => { if (!loader.classList.contains('hidden')) initViewer(); }, 2000);
   }
 
-  // 2. Инициализация галереи
+  // 2. Инициализация
   function initViewer() {
     if (validFiles.length === 0) {
-      loadText.textContent = 'Изображения не найдены. Проверьте конфиг.';
+      loadText.textContent = 'Нет изображений. Проверьте FILES.';
       return;
     }
 
@@ -204,71 +211,133 @@
       img.src = FOLDER + file;
       img.alt = file;
       img.loading = i < 3 ? 'eager' : 'lazy';
+      img.draggable = false; // Отключаем нативный драг
       slide.appendChild(img);
       track.appendChild(slide);
 
       const dot = document.createElement('div');
       dot.className = 'dot' + (i === 0 ? ' active' : '');
-      dot.addEventListener('click', () => goTo(i));
+      dot.addEventListener('click', (e) => { e.stopPropagation(); goTo(i); });
       dotsCont.appendChild(dot);
     });
 
     loader.classList.add('hidden');
     viewer.style.display = 'block';
     goTo(0);
+    setupSwipe();
   }
 
-  // 3. Навигация
+  // 3. Переход к слайду
   function goTo(index) {
     if (index < 0) index = 0;
     if (index >= validFiles.length) index = validFiles.length - 1;
     currentIndex = index;
-    prevTranslate = -currentIndex * window.innerWidth;
-    currentTranslate = prevTranslate;
-    track.style.transform = `translateX(${currentTranslate}px)`;
+    
+    const offset = -currentIndex * track.clientWidth;
+    track.style.transform = `translateX(${offset}px)`;
+    
     counter.textContent = `${currentIndex + 1} / ${validFiles.length}`;
-
-    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+    
+    document.querySelectorAll('.dot').forEach((d, i) => 
+      d.classList.toggle('active', i === currentIndex)
+    );
   }
 
-  prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
-  nextBtn.addEventListener('click', () => goTo(currentIndex + 1));
+  prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(currentIndex - 1); });
+  nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goTo(currentIndex + 1); });
 
   document.addEventListener('keydown', e => {
     if (viewer.style.display === 'none') return;
-    if (e.key === 'ArrowLeft')  goTo(currentIndex - 1);
+    if (e.key === 'ArrowLeft') goTo(currentIndex - 1);
     if (e.key === 'ArrowRight') goTo(currentIndex + 1);
   });
 
   window.addEventListener('resize', () => goTo(currentIndex));
 
-  // 4. Свайпы + мышь
-  function dragStart(e) {
-    isDragging = true;
-    startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-    track.style.transition = 'none';
-  }
-  function dragMove(e) {
-    if (!isDragging) return;
-    const x = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-    currentTranslate = prevTranslate + (x - startX);
-  }
-  function dragEnd() {
-    isDragging = false;
-    track.style.transition = 'transform 0.45s cubic-bezier(.2,.8,.2,1)';
-    const moved = currentTranslate - prevTranslate;
-    if (moved < -50)      goTo(currentIndex + 1);
-    else if (moved > 50)  goTo(currentIndex - 1);
-    else                  goTo(currentIndex);
+  // 4. Свайпы — ИСПРАВЛЕННАЯ ВЕРСИЯ
+  function setupSwipe() {
+    track.addEventListener('touchstart', handleTouchStart, { passive: true });
+    track.addEventListener('touchmove', handleTouchMove, { passive: false });
+    track.addEventListener('touchend', handleTouchEnd);
+    
+    // Для десктопа (мышь)
+    track.addEventListener('mousedown', handleMouseDown);
+    track.addEventListener('mousemove', handleMouseMove);
+    track.addEventListener('mouseup', handleMouseUp);
+    track.addEventListener('mouseleave', handleMouseUp);
   }
 
-  track.addEventListener('touchstart', dragStart, { passive: true });
-  track.addEventListener('touchmove', dragMove, { passive: true });
-  track.addEventListener('touchend', dragEnd);
-  track.addEventListener('mousedown', dragStart);
-  track.addEventListener('mousemove', dragMove);
-  track.addEventListener('mouseup', dragEnd);
-  track.addEventListener('mouseleave', () => { if (isDragging) dragEnd(); });
+  function handleTouchStart(e) {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    startTranslate = -currentIndex * track.clientWidth;
+    track.style.transition = 'none'; // Отключаем анимацию во время драга
+  }
+
+  function handleTouchMove(e) {
+    if (!isDragging) return;
+    e.preventDefault(); // Блокируем скролл страницы во время горизонтального свайпа
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - startX;
+    const newTranslate = startTranslate + diff;
+    track.style.transform = `translateX(${newTranslate}px)`;
+  }
+
+  function handleTouchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = 'transform 0.4s cubic-bezier(.2,.8,.2,1)';
+    
+    const currentTranslate = -currentIndex * track.clientWidth + (startX - (event.changedTouches[0]?.clientX || startX));
+    const swipeThreshold = track.clientWidth * 0.15; // 15% ширины экрана
+    
+    // Определяем, был ли свайп достаточно сильным
+    const diff = startX - (event.changedTouches[0]?.clientX || startX);
+    
+    if (diff > swipeThreshold) {
+      goTo(currentIndex + 1); // Свайп влево → следующий
+    } else if (diff < -swipeThreshold) {
+      goTo(currentIndex - 1); // Свайп вправо → предыдущий
+    } else {
+      goTo(currentIndex); // Возврат на место
+    }
+  }
+
+  // Мышь (десктоп)
+  function handleMouseDown(e) {
+    if (e.button !== 0) return; // Только левая кнопка
+    isDragging = true;
+    startX = e.clientX;
+    startTranslate = -currentIndex * track.clientWidth;
+    track.style.transition = 'none';
+    track.style.cursor = 'grabbing';
+  }
+
+  function handleMouseMove(e) {
+    if (!isDragging) return;
+    const currentX = e.clientX;
+    const diff = currentX - startX;
+    const newTranslate = startTranslate + diff;
+    track.style.transform = `translateX(${newTranslate}px)`;
+  }
+
+  function handleMouseUp() {
+    if (!isDragging) return;
+    isDragging = false;
+    track.style.transition = 'transform 0.4s cubic-bezier(.2,.8,.2,1)';
+    track.style.cursor = '';
+    
+    const diff = startX - (event.clientX || startX);
+    const swipeThreshold = track.clientWidth * 0.15;
+    
+    if (diff > swipeThreshold) {
+      goTo(currentIndex + 1);
+    } else if (diff < -swipeThreshold) {
+      goTo(currentIndex - 1);
+    } else {
+      goTo(currentIndex);
+    }
+  }
 
   // Запуск
   preload();
